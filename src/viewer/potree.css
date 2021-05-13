@@ -51,12 +51,27 @@
 	
 }
 
+#tools img{
+
+	vertical-align: middle	;
+}
+
 #potree_sidebar_container{
 	position:	absolute;
 	z-index:	0;
 	width:		350px;
 	height:		100%;
 	overflow-y:	scroll;
+	font-size:	85%;
+	border-right:	1px solid black;
+	background-color:	var(--bg-color);
+}
+
+#potree_sidebar_properties{
+	position:	absolute;
+	z-index:	0;
+	width:		350px;
+	height:		100%;	
 	font-size:	85%;
 	border-right:	1px solid black;
 	background-color:	var(--bg-color);

@@ -62,27 +62,7 @@ export class Sidebar{
 
 	initToolbar(){
 
-		// ANGLE
-		let elToolbar = $('#tools');
-		elToolbar.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/angle.png',
-			'[title]tt.angle_measurement',
-			() => {
-				$('#menu_measurements').next().slideDown();
-				let measurement = this.measuringTool.startInsertion({
-					showDistances: false,
-					showAngles: true,
-					showArea: false,
-					closed: true,
-					maxMarkers: 3,
-					name: 'Angle'});
-
-				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === measurement.uuid);
-				$.jstree.reference(jsonNode.id).deselect_all();
-				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-			}
-		));
+	let elToolbar = $('#tools');
 
 		// POINT
 		elToolbar.append(this.createToolIcon(
@@ -98,6 +78,29 @@ export class Sidebar{
 					closed: true,
 					maxMarkers: 1,
 					name: 'Point'});
+
+				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
+				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === measurement.uuid);
+				$.jstree.reference(jsonNode.id).deselect_all();
+				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
+			}
+		));
+		elToolbar.append("<span style='vertical-align:middle'>Coordonnée</span><br>");
+
+				// ANGLE
+		
+		elToolbar.append(this.createToolIcon(
+			Potree.resourcePath + '/icons/angle.png',
+			'[title]tt.angle_measurement',
+			() => {
+				$('#menu_measurements').next().slideDown();
+				let measurement = this.measuringTool.startInsertion({
+					showDistances: false,
+					showAngles: true,
+					showArea: false,
+					closed: true,
+					maxMarkers: 3,
+					name: 'Angle'});
 
 				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
 				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === measurement.uuid);
@@ -298,7 +301,7 @@ export class Sidebar{
 
 		let elScene = $("#menu_scene");
 		let elObjects = elScene.next().find("#scene_objects");
-		let elProperties = elScene.next().find("#scene_object_properties");
+		let elProperties = $("#scene_object_properties");
 		
 
 		{
@@ -1369,47 +1372,7 @@ export class Sidebar{
 		let sldMoveSpeed = $('#sldMoveSpeed');
 		let lblMoveSpeed = $('#lblMoveSpeed');
 
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/earth_controls_1.png',
-			'[title]tt.earth_control',
-			() => { this.viewer.setControls(this.viewer.earthControls); }
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/fps_controls.svg',
-			'[title]tt.flight_control',
-			() => {
-				this.viewer.setControls(this.viewer.fpControls);
-				this.viewer.fpControls.lockElevation = false;
-			}
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/helicopter_controls.svg',
-			'[title]tt.heli_control',
-			() => { 
-				this.viewer.setControls(this.viewer.fpControls);
-				this.viewer.fpControls.lockElevation = true;
-			}
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/orbit_controls.svg',
-			'[title]tt.orbit_control',
-			() => { this.viewer.setControls(this.viewer.orbitControls); }
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/focus.svg',
-			'[title]tt.focus_control',
-			() => { this.viewer.fitToScreen(); }
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/navigation_cube.svg",
-			"[title]tt.navigation_cube_control",
-			() => {this.viewer.toggleNavigationCube()}
-		));
+		
 
 		elNavigation.append(this.createToolIcon(
 			Potree.resourcePath + "/images/compas.svg",
