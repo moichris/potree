@@ -1427,3 +1427,9 @@ export class Sidebar{
 	}
 
 }
+
+// function scrollToAnchor(aid){
+//     var aTag = $("#"+ aid);
+//     $('#potree_sidebar_container').animate({scrollTop: aTag.offset().top},'slow');
+// }
+// scrollToAnchor("gotoscene")
