@@ -51,7 +51,20 @@
 	
 }
 
+#projet{
+    margin-left:1em;
+}
+
+#projet button{
+	margin:8px;
+}
+
 #tools img{
+
+	vertical-align: middle	;
+}
+
+.tools img{
 
 	vertical-align: middle	;
 }
@@ -414,6 +427,40 @@ body{
 
 .pv-menu-list > *{
 	margin: 	4px 20px;
+}
+
+.pv-menu-list #tools{
+	margin: 	0px 0px;
+}
+
+.pv-menu-list li img{
+	margin: 	4px 4px;
+	cursor: pointer;
+}
+
+.tools img{
+	margin: 	4px 4px;
+	cursor: pointer;
+}
+
+.pv-menu-list li span{	
+	cursor: pointer;
+	
+}
+
+.tools span{	
+	cursor: pointer;
+	
+}
+
+.pv-menu-list li span:hover{	
+	cursor: pointer;
+	text-shadow: 0.1em 0.1em 0.1em white;
+}
+
+.tools span:hover{	
+	cursor: pointer;
+	text-shadow: 0.1em 0.1em 0.1em white;
 }
 
 .ui-slider {
@@ -791,7 +838,7 @@ body{
 
 
 ::-webkit-scrollbar {
-	width: 6px;
+	width: 12px;
 	background-color: var(--bg-color);
 }
 
