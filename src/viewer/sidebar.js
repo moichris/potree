@@ -294,7 +294,16 @@ export class Sidebar{
 		let elScene = $("#menu_scene");
 		let elObjects = elScene.next().find("#scene_objects");
 		let elProperties = $("#scene_object_properties");
-		
+			$("#menu_scene").click(()=>{
+				
+			$("#pointclouds_anchor").children().first().removeClass();
+			$("#measurements_anchor").children().first().removeClass();
+			$("#annotations_anchor").children().first().removeClass();
+			$("#other_anchor").children().first().removeClass();
+			$("#vectors_anchor").children().first().removeClass();
+			$("#images_anchor").children().first().removeClass();
+			});
+	
 
 		{
 			let elExport = elScene.next().find("#scene_export");
