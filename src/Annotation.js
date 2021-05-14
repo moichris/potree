@@ -68,6 +68,10 @@ export class Annotation extends EventDispatcher {
 		// this.elDescriptionContent = this.elDescription.find(".annotation-description-content");
 
 		this.clickTitle = () => {
+			
+			let measurementsRoot = $("#jstree_scene").jstree().get_json("annotations");
+			let jsonNode = measurementsRoot.children.find(child => child.data.uuid === this.uuid);
+			$("#"+jsonNode.id+"_anchor").click();
 			if(this.hasView()){
 				this.moveHere(this.scene.getActiveCamera());
 			}

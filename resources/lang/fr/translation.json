@@ -1,14 +1,16 @@
 {
     "tb": {
         "navigation_opt": "Navigation",
-        "rendering_opt": "Apparence",
+        "rendering_opt": "Affichage",
         "tools_opt": "Outils",
         "measurments_opt": "Mesures",
         "materials_opt": "Matériaux",
         "scene_opt": "Scène",
         "classification_filter_opt": "Filtre de classification",
         "parameters_opt": "Autres paramètres",
-        "about_opt": "À propos"
+        "about_opt": "À propos",
+		"dls_opt": "Téléchargements",
+		"help_opt": "Aide vidéo"
     },
     "tt": {
         "angle_measurement": "Mesurer un angle",

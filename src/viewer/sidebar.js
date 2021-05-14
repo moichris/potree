@@ -31,15 +31,40 @@ export class Sidebar{
 		this.dom = $("#sidebar_root");
 	}
 
-	createToolIcon(icon, title, callback){
+	createToolIcon(id,icon, title, callback){
 		let element = $(`
-			<img src="${icon}"
+			<img id="${id}" src="${icon}"
 				style="width: 32px; height: 32px"
 				class="button-icon"
 				data-i18n="${title}" />
 		`);
 
 		element.click(callback);
+
+		return element;
+	}
+
+		createQuickToolIcon(icon, title, callback){
+		let element = $(`
+			<img src="${icon}"
+				style="width: 40px; height: 40px;margin:4px;"
+				class="button-icon"
+				data-i18n="${title}" />
+		`);
+
+		
+
+		element.click(callback);
+
+		return element;
+	}
+
+	createLogoHeader(icon){
+		let element = $(`
+			<img src="${icon}"
+				style="display: block;margin-top:4px;margin-bottom:4px;width: 30%;margin-left: auto;  margin-right: auto;"
+				/>
+		`);		
 
 		return element;
 	}
@@ -65,7 +90,7 @@ export class Sidebar{
 	let elToolbar = $('#tools');
 
 		// POINT
-		elToolbar.append(this.createToolIcon(
+		elToolbar.append(this.createToolIcon('outilpoint',
 			Potree.resourcePath + '/icons/point.svg',
 			'[title]tt.point_measurement',
 			() => {
@@ -85,32 +110,11 @@ export class Sidebar{
 				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
 			}
 		));
-		elToolbar.append("<span style='vertical-align:middle'>Coordonnée</span><br>");
-
-				// ANGLE
-		
-		elToolbar.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/angle.png',
-			'[title]tt.angle_measurement',
-			() => {
-				$('#menu_measurements').next().slideDown();
-				let measurement = this.measuringTool.startInsertion({
-					showDistances: false,
-					showAngles: true,
-					showArea: false,
-					closed: true,
-					maxMarkers: 3,
-					name: 'Angle'});
-
-				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === measurement.uuid);
-				$.jstree.reference(jsonNode.id).deselect_all();
-				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-			}
-		));
+		elToolbar.append("<span id='texte1' style='vertical-align:middle'>Prélever les coordonnées d'un point</span><br>");
+		$("#texte1").click(()=>{$("#outilpoint").click();});
 
 		// DISTANCE
-		elToolbar.append(this.createToolIcon(
+		elToolbar.append(this.createToolIcon('outildistance',
 			Potree.resourcePath + '/icons/distance.svg',
 			'[title]tt.distance_measurement',
 			() => {
@@ -128,8 +132,11 @@ export class Sidebar{
 			}
 		));
 
-		// HEIGHT
-		elToolbar.append(this.createToolIcon(
+		elToolbar.append("<span id='texte2' style='vertical-align:middle'>Mesurer une distance</span><br>");
+		$("#texte2").click(()=>{$("#outildistance").click();});
+
+
+			elToolbar.append(this.createToolIcon('outilhauteur',
 			Potree.resourcePath + '/icons/height.svg',
 			'[title]tt.height_measurement',
 			() => {
@@ -149,8 +156,36 @@ export class Sidebar{
 			}
 		));
 
+		elToolbar.append("<span id='texte3' style='vertical-align:middle'>Mesurer une différence altimétrique</span><br>");
+		$("#texte3").click(()=>{$("#outilhauteur").click();});
+				// ANGLE
+		
+		elToolbar.append(this.createToolIcon('outilangle',
+			Potree.resourcePath + '/icons/angle.png',
+			'[title]tt.angle_measurement',
+			() => {
+				$('#menu_measurements').next().slideDown();
+				let measurement = this.measuringTool.startInsertion({
+					showDistances: false,
+					showAngles: true,
+					showArea: false,
+					closed: true,
+					maxMarkers: 3,
+					name: 'Angle'});
+
+				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
+				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === measurement.uuid);
+				$.jstree.reference(jsonNode.id).deselect_all();
+				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
+			}
+		));
+		elToolbar.append("<span id='texte4' style='vertical-align:middle'>Mesurer un angle</span><br>");
+		$("#texte4").click(()=>{$("#outilangle").click();});
+		// HEIGHT
+	
+
 		// CIRCLE
-		elToolbar.append(this.createToolIcon(
+		let circleElement= this.createToolIcon('outilcercle',
 			Potree.resourcePath + '/icons/circle.svg',
 			'[title]tt.circle_measurement',
 			() => {
@@ -170,34 +205,13 @@ export class Sidebar{
 				$.jstree.reference(jsonNode.id).deselect_all();
 				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
 			}
-		));
-
-		// AZIMUTH
-		elToolbar.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/azimuth.svg',
-			'Azimuth',
-			() => {
-				$('#menu_measurements').next().slideDown();
-				let measurement = this.measuringTool.startInsertion({
-					showDistances: false,
-					showHeight: false,
-					showArea: false,
-					showCircle: false,
-					showEdges: false,
-					showAzimuth: true,
-					closed: false,
-					maxMarkers: 2,
-					name: 'Azimuth'});
-
-				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === measurement.uuid);
-				$.jstree.reference(jsonNode.id).deselect_all();
-				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-			}
-		));
+		)
+		elToolbar.append(circleElement);
+		elToolbar.append("<span id='texte5' style='vertical-align:middle'>Dessiner un cercle selon trois points</span><br>");
+		$("#texte5").click(()=>{$("#outilcercle").click();});
 
 		// AREA
-		elToolbar.append(this.createToolIcon(
+		elToolbar.append(this.createToolIcon('outilsurface',
 			Potree.resourcePath + '/icons/area.svg',
 			'[title]tt.area_measurement',
 			() => {
@@ -214,37 +228,11 @@ export class Sidebar{
 				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
 			}
 		));
-
-		// VOLUME
-		elToolbar.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/volume.svg',
-			'[title]tt.volume_measurement',
-			() => {
-				let volume = this.volumeTool.startInsertion(); 
-
-				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === volume.uuid);
-				$.jstree.reference(jsonNode.id).deselect_all();
-				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-			}
-		));
-
-		// SPHERE VOLUME
-		elToolbar.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/sphere_distances.svg',
-			'[title]tt.volume_measurement',
-			() => { 
-				let volume = this.volumeTool.startInsertion({type: SphereVolume}); 
-
-				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === volume.uuid);
-				$.jstree.reference(jsonNode.id).deselect_all();
-				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-			}
-		));
+		elToolbar.append("<span id='texte6' style='vertical-align:middle'>Mesurer une surface</span><br>");
+		$("#texte6").click(()=>{$("#outilsurface").click();});
 
 		// PROFILE
-		elToolbar.append(this.createToolIcon(
+		elToolbar.append(this.createToolIcon('outilprofil',
 			Potree.resourcePath + '/icons/profile.svg',
 			'[title]tt.height_profile',
 			() => {
@@ -257,9 +245,10 @@ export class Sidebar{
 				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
 			}
 		));
-
+		elToolbar.append("<span id='texte7' style='vertical-align:middle'>Tracer un profil</span><br>");
+		$("#texte7").click(()=>{$("#outilprofil").click();});
 		// ANNOTATION
-		elToolbar.append(this.createToolIcon(
+		elToolbar.append(this.createToolIcon('outilannotation',
 			Potree.resourcePath + '/icons/annotation.svg',
 			'[title]tt.annotation',
 			() => {
@@ -272,17 +261,20 @@ export class Sidebar{
 				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
 			}
 		));
+		elToolbar.append("<span id='texte8' style='vertical-align:middle'>Ajouter une annotation</span><br><br>");
+		$("#texte8").click(()=>{$("#outilannotation").click();});
+
 
 		// REMOVE ALL
-		elToolbar.append(this.createToolIcon(
+		elToolbar.append(this.createToolIcon('outilsuppr',
 			Potree.resourcePath + '/icons/reset_tools.svg',
 			'[title]tt.remove_all_measurement',
 			() => {
 				this.viewer.scene.removeAllMeasurements();
 			}
 		));
-
-
+		elToolbar.append("<span id='texte9' style='vertical-align:middle'>Effacer toutes les mesures</span><br>");
+		$("#texte9").click(()=>{$("#outilsuppr").click();});
 		{ // SHOW / HIDE Measurements
 			let elShow = $("#measurement_options_show");
 			elShow.selectgroup({title: "Show/Hide labels"});
@@ -309,13 +301,13 @@ export class Sidebar{
 
 			let geoJSONIcon = `${Potree.resourcePath}/icons/file_geojson.svg`;
 			let dxfIcon = `${Potree.resourcePath}/icons/file_dxf.svg`;
-			let potreeIcon = `${Potree.resourcePath}/icons/file_potree.svg`;
+			
 
 			elExport.append(`
 				Export: <br>
 				<a href="#" download="measure.json"><img name="geojson_export_button" src="${geoJSONIcon}" class="button-icon" style="height: 24px" /></a>
 				<a href="#" download="measure.dxf"><img name="dxf_export_button" src="${dxfIcon}" class="button-icon" style="height: 24px" /></a>
-				<a href="#" download="potree.json5"><img name="potree_export_button" src="${potreeIcon}" class="button-icon" style="height: 24px" /></a>
+				
 			`);
 
 			let elDownloadJSON = elExport.find("img[name=geojson_export_button]").parent();
@@ -350,7 +342,7 @@ export class Sidebar{
 				}
 			});
 
-			let elDownloadPotree = elExport.find("img[name=potree_export_button]").parent();
+			let elDownloadPotree = $("#sauvegarder");
 			elDownloadPotree.click( (event) => {
 
 				let data = Potree.saveProject(this.viewer);
@@ -359,6 +351,7 @@ export class Sidebar{
 				let url = window.URL.createObjectURL(new Blob([dataString], {type: 'data:application/octet-stream'}));
 				elDownloadPotree.attr('href', url);
 			});
+			
 		}
 
 		let propertiesPanel = new PropertiesPanel(elProperties, this.viewer);
@@ -404,12 +397,12 @@ export class Sidebar{
 			return nodeID;
 		}
 
-		let pcID = tree.jstree('create_node', "#", { "text": "<b>Point Clouds</b>", "id": "pointclouds"}, "last", false, false);
-		let measurementID = tree.jstree('create_node', "#", { "text": "<b>Measurements</b>", "id": "measurements" }, "last", false, false);
+		let pcID = tree.jstree('create_node', "#", { "text": "<b>Nuages de points</b>", "id": "pointclouds"}, "last", false, false);
+		let measurementID = tree.jstree('create_node', "#", { "text": "<b>Mesures</b>", "id": "measurements" }, "last", false, false);
 		let annotationsID = tree.jstree('create_node', "#", { "text": "<b>Annotations</b>", "id": "annotations" }, "last", false, false);
-		let otherID = tree.jstree('create_node', "#", { "text": "<b>Other</b>", "id": "other" }, "last", false, false);
-		let vectorsID = tree.jstree('create_node', "#", { "text": "<b>Vectors</b>", "id": "vectors" }, "last", false, false);
-		let imagesID = tree.jstree('create_node', "#", { "text": "<b> Images</b>", "id": "images" }, "last", false, false);
+		let otherID = tree.jstree('create_node', "#", { "text": "<b>Autres</b>", "id": "other" }, "last", false, false);
+		let vectorsID = tree.jstree('create_node', "#", { "text": "<b>Vecteurs</b>", "id": "vectors" }, "last", false, false);
+		let imagesID = tree.jstree('create_node', "#", { "text": "<b>Images</b>", "id": "images" }, "last", false, false);
 
 		tree.jstree("check_node", pcID);
 		tree.jstree("check_node", measurementID);
@@ -686,6 +679,13 @@ export class Sidebar{
 			tree.jstree("delete_node", jsonNode.id);
 		};
 
+		let onAnnotationRemoved = (e) => {
+			let measurementsRoot = $("#jstree_scene").jstree().get_json("annotations");
+			let jsonNode = measurementsRoot.children.find(child => child.data.uuid === e.annotation.uuid);
+			
+			tree.jstree("delete_node", jsonNode.id);
+		};
+
 		let onVolumeRemoved = (e) => {
 			let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
 			let jsonNode = measurementsRoot.children.find(child => child.data.uuid === e.volume.uuid);
@@ -711,6 +711,7 @@ export class Sidebar{
 		this.viewer.scene.addEventListener("volume_removed", onVolumeRemoved);
 		this.viewer.scene.addEventListener("polygon_clip_volume_removed", onPolygonClipVolumeRemoved);
 		this.viewer.scene.addEventListener("profile_removed", onProfileRemoved);
+		this.viewer.scene.addEventListener("annotation_removed", onAnnotationRemoved);
 
 		{
 			let annotationIcon = `${Potree.resourcePath}/icons/annotation.svg`;
@@ -769,6 +770,7 @@ export class Sidebar{
 			e.oldScene.removeEventListener("volume_added", onVolumeAdded);
 			e.oldScene.removeEventListener("polygon_clip_volume_added", onVolumeAdded);
 			e.oldScene.removeEventListener("measurement_removed", onMeasurementRemoved);
+			e.oldScene.removeEventListener("annotation_removed", onAnnotationRemoved);
 
 			e.scene.addEventListener("pointcloud_added", onPointCloudAdded);
 			e.scene.addEventListener("measurement_added", onMeasurementAdded);
@@ -776,6 +778,7 @@ export class Sidebar{
 			e.scene.addEventListener("volume_added", onVolumeAdded);
 			e.scene.addEventListener("polygon_clip_volume_added", onVolumeAdded);
 			e.scene.addEventListener("measurement_removed", onMeasurementRemoved);
+			e.scene.addEventListener("annotation_removed", onAnnotationRemoved);
 		});
 
 	}
@@ -819,67 +822,7 @@ export class Sidebar{
 
 		let clippingToolBar = $("#clipping_tools");
 
-		// CLIP VOLUME
-		clippingToolBar.append(this.createToolIcon(
-			Potree.resourcePath + '/icons/clip_volume.svg',
-			'[title]tt.clip_volume',
-			() => {
-				let item = this.volumeTool.startInsertion({clip: true}); 
-
-				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === item.uuid);
-				$.jstree.reference(jsonNode.id).deselect_all();
-				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-			}
-		));
-
-		// CLIP POLYGON
-		clippingToolBar.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/clip-polygon.svg",
-			"[title]tt.clip_polygon",
-			() => {
-				let item = this.viewer.clippingTool.startInsertion({type: "polygon"});
-
-				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-				let jsonNode = measurementsRoot.children.find(child => child.data.uuid === item.uuid);
-				$.jstree.reference(jsonNode.id).deselect_all();
-				$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-			}
-		));
-
-		{// SCREEN BOX SELECT
-			let boxSelectTool = new ScreenBoxSelectTool(this.viewer);
-
-			clippingToolBar.append(this.createToolIcon(
-				Potree.resourcePath + "/icons/clip-screen.svg",
-				"[title]tt.screen_clip_box",
-				() => {
-					if(!(this.viewer.scene.getActiveCamera() instanceof THREE.OrthographicCamera)){
-						this.viewer.postMessage(`Switch to Orthographic Camera Mode before using the Screen-Box-Select tool.`, 
-							{duration: 2000});
-						return;
-					}
-					
-					let item = boxSelectTool.startInsertion();
-
-					let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
-					let jsonNode = measurementsRoot.children.find(child => child.data.uuid === item.uuid);
-					$.jstree.reference(jsonNode.id).deselect_all();
-					$.jstree.reference(jsonNode.id).select_node(jsonNode.id);
-				}
-			));
-		}
-
-		{ // REMOVE CLIPPING TOOLS
-			clippingToolBar.append(this.createToolIcon(
-				Potree.resourcePath + "/icons/remove.svg",
-				"[title]tt.remove_all_clipping_volumes",
-				() => {
-
-					this.viewer.scene.removeAllClipVolumes();
-				}
-			));
-		}
+	
 
 	}
 
@@ -1228,11 +1171,12 @@ export class Sidebar{
 			let content = $(this).next();
 
 			//header.addClass('accordion-header ui-widget');
-			//content.addClass('accordion-content ui-widget');
+			content.addClass('accordion-content');
 
 			content.hide();
 
 			header.click(() => {
+				//$(".accordion-content:visible").slideToggle();
 				content.slideToggle();
 			});
 		});
@@ -1369,6 +1313,7 @@ export class Sidebar{
 
 	initNavigation(){
 		let elNavigation = $('#navigation');
+		let elQuickButtons = $('#potree_quick_buttons');
 		let sldMoveSpeed = $('#sldMoveSpeed');
 		let lblMoveSpeed = $('#lblMoveSpeed');
 
@@ -1383,74 +1328,24 @@ export class Sidebar{
 			}
 		));
 
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/camera_animation.svg",
-			"[title]tt.camera_animation",
-			() => {
-				const animation = CameraAnimation.defaultFromView(this.viewer);
-
-				viewer.scene.addCameraAnimation(animation);
-			}
-		));
+		
+		
 
 
-		elNavigation.append("<br>");
-
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/left.svg",
-			"[title]tt.left_view_control",
-			() => {this.viewer.setLeftView()}
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/right.svg",
-			"[title]tt.right_view_control",
-			() => {this.viewer.setRightView()}
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/front.svg",
-			"[title]tt.front_view_control",
-			() => {this.viewer.setFrontView()}
-		));
-
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/back.svg",
-			"[title]tt.back_view_control",
-			() => {this.viewer.setBackView()}
-		));
-
-		elNavigation.append(this.createToolIcon(
+		elQuickButtons.append(this.createQuickToolIcon(
 			Potree.resourcePath + "/icons/top.svg",
 			"[title]tt.top_view_control",
 			() => {this.viewer.setTopView()}
 		));
 
-		elNavigation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/bottom.svg",
-			"[title]tt.bottom_view_control",
-			() => {this.viewer.setBottomView()}
+		let elHeader = $('#sidebar_header');
+
+		elHeader.prepend(this.createLogoHeader(
+			Potree.resourcePath + "/images/logo_silene.jpg",
+			"Silene"
 		));
 
 
-
-
-
-		let elCameraProjection = $(`
-			<selectgroup id="camera_projection_options">
-				<option id="camera_projection_options_perspective" value="PERSPECTIVE">Perspective</option>
-				<option id="camera_projection_options_orthigraphic" value="ORTHOGRAPHIC">Orthographic</option>
-			</selectgroup>
-		`);
-		elNavigation.append(elCameraProjection);
-		elCameraProjection.selectgroup({title: "Camera Projection"});
-		elCameraProjection.find("input").click( (e) => {
-			this.viewer.setCameraMode(CameraMode[e.target.value]);
-		});
-		let cameraMode = Object.keys(CameraMode)
-			.filter(key => CameraMode[key] === this.viewer.scene.cameraMode);
-		elCameraProjection.find(`input[value=${cameraMode}]`).trigger("click");
 
 		let speedRange = new THREE.Vector2(1, 10 * 1000);
 

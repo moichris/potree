@@ -78,7 +78,7 @@ let shaders = [
 // from the command line to start the server (default port is 8080)
 gulp.task('webserver', gulp.series(async function() {
 	server = connect.server({
-		port: 1234,
+		port: 80,
 		https: false,
 	});
 }));

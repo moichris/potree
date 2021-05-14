@@ -1008,6 +1008,19 @@ export class Viewer extends EventDispatcher{
 		//Potree.loadProject(this, url);
 	}
 
+		async loadProjectText(text){
+		
+		const json = JSON5.parse(text);
+		// const json = JSON.parse(text);
+
+		if(json.type === "Potree"){
+			Potree.loadProject(viewer, json);
+		}
+
+		//Potree.loadProject(this, url);
+	}
+
+
 	saveProject(){
 		return Potree.saveProject(this);
 	}

@@ -8,7 +8,7 @@ export class AnnotationPanel{
 		this.annotation = annotation;
 
 		this._update = () => { this.update(); };
-
+		let removeIconPath = Potree.resourcePath + '/icons/remove.svg';
 		let copyIconPath = `${Potree.resourcePath}/icons/copy.svg`;
 		this.elContent = $(`
 		<div class="propertypanel_content">
@@ -41,11 +41,20 @@ export class AnnotationPanel{
 						Can be multiple lines long. TODO: the user should be able
 						to modify title and description. 
 				</div>
-
+				<div style="display: flex; margin-top: 12px">
+					<span></span>
+					<span style="flex-grow: 1"></span>
+					<img name="remove" class="button-icon" src="${removeIconPath}" style="width: 16px; height: 16px"/>
+				</div>
 			</div>
 
 		</div>
 		`);
+
+		this.elRemove = this.elContent.find("img[name=remove]");
+		this.elRemove.click( () => {
+			this.viewer.scene.removeAnnotation(annotation);
+		});
 
 		this.elCopyPosition = this.elContent.find("img[name=copyPosition]");
 		this.elCopyPosition.click( () => {
